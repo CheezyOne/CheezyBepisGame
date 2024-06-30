@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Barrier
   layers:
   - Default
   - TransparentFX
@@ -40,4 +41,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: bugs
+    uniqueID: 4207952021
+    locked: 0
+  - name: cat
+    uniqueID: 3638425407
+    locked: 0
+  - name: food
+    uniqueID: 2250465225
     locked: 0
