@@ -8,6 +8,8 @@ public class PointsManager : MonoBehaviour
     public static Action onLose;
     private bool _isGameOver = true;
     private int _lootPoints = 0;
+
+    [SerializeField] private AudioSource audioSource;
     private void OnEnable()
     {
         LootGetter.OnLootGet += GetLoot;
@@ -35,6 +37,7 @@ public class PointsManager : MonoBehaviour
     }
     private void GetLoot(int lootPoints)
     {
+        audioSource.Play();
         if (_isGameOver)
             return;
         if (lootPoints > 0)

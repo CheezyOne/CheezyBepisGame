@@ -5,6 +5,8 @@ public class ClicksRegister : MonoBehaviour
     [SerializeField] private GameObject _particleEffect;
     private bool _isGameOn;
     private Camera _mainCamera;
+
+    [SerializeField] private AudioSource audioSource;
     private void Awake()
     {
         _mainCamera = Camera.main;
@@ -37,7 +39,11 @@ public class ClicksRegister : MonoBehaviour
             Vector2 clickPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             Vector3 clickPosition3D = new Vector3(clickPosition.x, clickPosition.y, 0);
             Collider2D[] colliders = Physics2D.OverlapCircleAll(clickPosition, _repelRadius);
+            
             Instantiate(_particleEffect, clickPosition, Quaternion.identity);
+            // Sound!
+            
+
             foreach (Collider2D collider in colliders)
             {
                 Vector3 Distance = collider.transform.position - clickPosition3D;
@@ -49,6 +55,7 @@ public class ClicksRegister : MonoBehaviour
                     ColliderRigidBody.AddForce(repelDirection * _repelForce/ DistanceFloat, ForceMode2D.Impulse);
                 }
             }
+            
         }
     }
 }

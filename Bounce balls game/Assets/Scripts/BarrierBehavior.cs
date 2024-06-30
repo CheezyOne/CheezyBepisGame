@@ -10,8 +10,8 @@ public class BarrierBehaviour : MonoBehaviour
     public GameObject objectToMove;
     [SerializeField] private float _timer = 10f;
     private float _rememberTimer = 0;
+    private float _timerDeacrease = 0.1f, _timeBeforeSpawnRateIncrease = 10f, _timerMinimum = 2f;
 
-    static public float barrierDuration = 1f;
     private bool _isGameOver = true;
 
     public void Awake()
@@ -30,8 +30,9 @@ public class BarrierBehaviour : MonoBehaviour
     }
     private void GameStart()
     {
-        _isGameOver = false;
-    }
+        StartCoroutine(IncreaseSpawnRate());
+        _rememberTimer = 3f;
+        _isGameOver = false;    }
     private void GameOver()
     {
         _isGameOver = true;
@@ -42,6 +43,15 @@ public class BarrierBehaviour : MonoBehaviour
             return;
         Timer();
     }
+    private IEnumerator IncreaseSpawnRate()
+    {
+        yield return new WaitForSeconds(_timeBeforeSpawnRateIncrease);
+        if (_rememberTimer > _timerMinimum)
+            _rememberTimer -= _timerDeacrease;
+        yield return IncreaseSpawnRate();
+    }
+
+
     private void Timer()
     {
         _timer -= Time.deltaTime;

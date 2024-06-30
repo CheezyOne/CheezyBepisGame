@@ -63,7 +63,7 @@ public class LootSpawner : MonoBehaviour
     private void SpawnNewLoot()
     {
 
-        Vector3 SpawnPosition =new Vector3(Random.Range(_leftSpawnerX, _rightSpawnerX), _spawnerY,0);
+        Vector3 SpawnPosition = new Vector3(Random.Range(_leftSpawnerX, _rightSpawnerX), _spawnerY,0);
         int SpawnLoot = Random.Range(0, _allLoot.Length);
         PoolManager.SpawnObject(_allLoot[SpawnLoot], SpawnPosition, Quaternion.identity);
 
