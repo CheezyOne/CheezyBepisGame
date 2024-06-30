@@ -12,15 +12,34 @@ public class BarrierBehaviour : MonoBehaviour
     private float _rememberTimer = 0;
 
     static public float barrierDuration = 1f;
-
+    private bool _isGameOver = true;
 
     public void Awake()
     {
         _rememberTimer = _timer;
     }
-
+    private void OnEnable()
+    {
+        PointsManager.onLose += GameOver;
+        MenuButtons.OnGameStart += GameStart;
+    }
+    private void OnDisable()
+    {
+        PointsManager.onLose -= GameOver;
+        MenuButtons.OnGameStart -= GameStart;
+    }
+    private void GameStart()
+    {
+        _isGameOver = false;
+    }
+    private void GameOver()
+    {
+        _isGameOver = true;
+    }
     private void Update()
     {
+        if (_isGameOver)
+            return;
         Timer();
     }
     private void Timer()

@@ -1,20 +1,42 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class PointsManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _textMeshPro;
+    public static Action onLose;
+    private bool _isGameOver = true;
     private int _lootPoints = 0;
     private void OnEnable()
     {
         LootGetter.OnLootGet += GetLoot;
+        MenuButtons.OnGameStart += GameStart;
+        OutOfBoundsZone.onLoseLoot += LoseLoot;
     }
     private void OnDisable()
     {
         LootGetter.OnLootGet -= GetLoot;
+        MenuButtons.OnGameStart -= GameStart;
+        OutOfBoundsZone.onLoseLoot -= LoseLoot;
+    }
+    private void GameStart()
+    {
+        _isGameOver = false;
+        _textMeshPro.text = "0";
+        _lootPoints = 0;
+    }
+    private void LoseLoot(int lootPoints)
+    {
+        _lootPoints -= lootPoints;
+        if(_lootPoints < 0)
+            _lootPoints= 0;
+        SetLootPointsText();
     }
     private void GetLoot(int lootPoints)
     {
+        if (_isGameOver)
+            return;
         if (lootPoints > 0)
         {
             _lootPoints += lootPoints;
@@ -34,6 +56,7 @@ public class PointsManager : MonoBehaviour
     }
     private void Lose()
     {
-        Debug.Log("You lost");
+        _isGameOver = true;
+        onLose?.Invoke();
     }
 }
